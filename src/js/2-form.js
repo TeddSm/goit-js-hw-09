@@ -8,9 +8,12 @@ const form = document.querySelector('.feedback-form');
 const textArrea = form.elements.message;
 const input = form.elements.email;
 
-if (localStorage.length !== 0) {
-  textArrea.value = JSON.parse(localStorage.getItem(localStorageKey)).message;
-  input.value = JSON.parse(localStorage.getItem(localStorageKey)).email;
+const savedData = localStorage.getItem(localStorageKey);
+
+if (savedData) {
+  const parsedData = JSON.parse(savedData);
+  textArrea.value = parsedData.message || '';
+  input.value = parsedData.email || '';
 }
 
 form.addEventListener('input', event => {
@@ -21,12 +24,13 @@ form.addEventListener('input', event => {
 
 form.addEventListener('submit', event => {
   event.preventDefault();
-  if (textArrea.value.trim() !== '' && input.value.trim() !== '') {
-    console.log(formData);
+  const emailValue = input.value.trim();
+  const messageValue = textArrea.value.trim();
+
+  if (emailValue !== '' && messageValue !== '') {
+    console.log({ email: emailValue, message: messageValue });
     localStorage.removeItem(localStorageKey);
     form.reset();
-    formData.email = '';
-    formData.message = '';
   } else {
     alert('Fill please all fields');
   }
