@@ -65,10 +65,15 @@ const images = [
     description: 'Lighthouse Coast Sea',
   },
 ];
+
 const ul = document.querySelector('.gallery');
+let galleryMarkup = '';
+
 images.forEach(({ original, preview, description }) => {
-  ul.innerHTML += `<li class = "gallery-item"><a class="gallery-link" href="${original}"><img class="gallery-image" src= "${preview}" data-source="${original}" alt = "${description}"></a></li>`;
+  galleryMarkup += `<li class = "gallery-item"><a class="gallery-link" href="${original}"><img class="gallery-image" src= "${preview}" data-source="${original}" alt = "${description}"></a></li>`;
 });
+
+ul.innerHTML = galleryMarkup;
 
 const lightbox = new SimpleLightbox('.gallery a', {
   captionsData: 'alt',
